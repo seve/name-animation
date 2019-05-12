@@ -14,3 +14,4 @@ holder.append('line')
   .attr('y1', 16)
   .attr('x2', window.outerWidth)
   .attr('y2', 16);
+
