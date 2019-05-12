@@ -1,11 +1,36 @@
-const holder = d3.select("#canvas");
+const canvas = d3.select("#canvas");
 
-const numOfGroups = 3 * window.outerHeight / 16 ;
+const allLines = [];
+
+const SIZE = 8;
+
+const numOfGroups = 3 * window.outerHeight / SIZE ;
 
 const lines = []
 
-let y = 0;
-let color
+const mouseG = canvas.append('g')
+.attr('class', 'mouse-over-effects');
+
+let y = - window.outerHeight;
+let color;
+const height = Number(window.outerHeight)
+const repeat = (elem, y) => {
+  const thisY = y;
+  
+  elem.attr('x1', 0)
+  .attr('y1', thisY)
+  .attr('x2', window.outerWidth)
+  .attr('y2', thisY)
+  .transition()
+  .duration(8000)
+
+  .attr('y1', height + thisY)
+  .attr('y2', height + thisY)
+  .ease(d3.easeLinear)
+  .on('end', () => {
+    repeat(elem, thisY);
+  })
+}
 
 for(let i = 0; i < numOfGroups; i += 1) {
   switch (i % 3){
@@ -22,15 +47,15 @@ for(let i = 0; i < numOfGroups; i += 1) {
       break;
   }
 
-lines.push(holder.append('line')
+  const elem = canvas.append('line')
   .style('stroke', color)
-  .style('stroke-width', '16')
-  .attr('x1', 0)
-  .attr('y1', y)
-  .attr('x2', window.outerWidth)
-  .attr('y2', y));
+  .style('stroke-width', SIZE);
 
-  y+= 16;
+  repeat(elem, y);
+
+  allLines.push(elem);
+
+  y += SIZE;
 
 
 }
