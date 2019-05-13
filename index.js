@@ -72,7 +72,7 @@ canvas.append('rect')
   })
   .on('mousemove', () => {
     const mouse = d3.mouse(d3.event.currentTarget);
-    group.attr('transform', `translate(0, ${mouse[1] / 6})`)
+    group.attr('transform', `translate3D(0, ${mouse[1] / 6}, 0)`)
   })
   .raise()
   .attr('width', window.outerWidth)
